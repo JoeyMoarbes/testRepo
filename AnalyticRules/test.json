@@ -14,7 +14,7 @@
             "kind": "Scheduled",
             "apiVersion": "2023-12-01-preview",
             "properties": {
-                "displayName": "MCN - Virus / Malware Detected",
+                "displayName": "TestRule",
                 "description": "Cette régle est levée lors de la détection d'un virus ou d'un malware dans Trend Micro Apex Central ou Fortinet ou M365 ou SentinelOne NGQ",
                 "severity": "High",
                 "enabled": true,
