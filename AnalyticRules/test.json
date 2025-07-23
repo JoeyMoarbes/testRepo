@@ -1,0 +1,60 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspace": {
+            "type": "String"
+        }
+    },
+    "resources": [
+        {
+            "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/6666ffee-1c66-45a2-a04a-855326f99be3')]",
+            "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/6666ffee-1c66-45a2-a04a-855326f99be3')]",
+            "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+            "kind": "Scheduled",
+            "apiVersion": "2023-12-01-preview",
+            "properties": {
+                "displayName": "MCN - Virus / Malware Detected",
+                "description": "Cette régle est levée lors de la détection d'un virus ou d'un malware dans Trend Micro Apex Central ou Fortinet ou M365 ou SentinelOne NGQ",
+                "severity": "High",
+                "enabled": true,
+                "query": "union \r\n  SecurityAlert\r\n| where ProductName in~ (\"Trend Micro\", \"Fortinet\", \"SentinelOne\", \"Microsoft Defender\", \"McAfee ePO\")\r\n| where AlertName has_any (\r\n    \"Apex Virus Detected\",\r\n    \"Fortinet Virus Detected\",\r\n    \"M365 Virus Detected\",\r\n    \"SentinelOne Virus Detected\",\r\n    \"SEAO Virus Detected\",\r\n    \"McAfee ePo Virus\"\r\n)\r\n",
+                "queryFrequency": "PT5M",
+                "queryPeriod": "PT5H",
+                "triggerOperator": "GreaterThan",
+                "triggerThreshold": 0,
+                "suppressionDuration": "PT5H",
+                "suppressionEnabled": false,
+                "startTimeUtc": null,
+                "tactics": [
+                    "InitialAccess"
+                ],
+                "techniques": [],
+                "subTechniques": [],
+                "alertRuleTemplateName": null,
+                "incidentConfiguration": {
+                    "createIncident": true,
+                    "groupingConfiguration": {
+                        "enabled": false,
+                        "reopenClosedIncident": false,
+                        "lookbackDuration": "PT5H",
+                        "matchingMethod": "AllEntities",
+                        "groupByEntities": [],
+                        "groupByAlertDetails": [],
+                        "groupByCustomDetails": []
+                    }
+                },
+                "eventGroupingSettings": {
+                    "aggregationKind": "SingleAlert"
+                },
+                "alertDetailsOverride": {
+                    "alertDynamicProperties": []
+                },
+                "customDetails": {},
+                "entityMappings": null,
+                "sentinelEntitiesMappings": null,
+                "templateVersion": null
+            }
+        }
+    ]
+}
